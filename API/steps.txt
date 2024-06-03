@@ -1,0 +1,18 @@
+1)dot net ef migration
+    • Install the tools globally
+        dotnet tool install --global dotnet-ef
+    • Add a migration
+        dotnet ef migrations add InitialCreate -o Data/Migrations
+        To undo this action, use 'ef migrations remove'
+
+
+2)dotnet ef database update
+    • Apply migrations to the database
+        dotnet ef database update
+        To undo this action, use 'ef migrations remove'
+
+3)dotnet watch
+    • Run the application and watch for file changes
+        dotnet watch run
+    • dotnet watch --no-hot-reload 
+        
