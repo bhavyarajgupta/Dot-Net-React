@@ -7,14 +7,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+
+    public class ProductsController : BaseApiController
     {
-        //define cunstructor
+        //define cunstructor by ctor
+        // storecontext is the class that we created in the data folder to connect to the database and get the data 
         private readonly StoreContext _context;
+
+        // ProductController(StoreContext context) is the constructor that will be called when the controller is created
         public ProductsController(StoreContext context)
         {
+            //for private field _context we are assigning the context that we are getting from the constructor  
             _context = context;
             //this.context = context;
             
@@ -22,7 +25,7 @@ namespace API.Controllers
         
         //define end point method
 
-        // making async to make it more efficient and hanfle concurrent requests
+        // making async to make it more efficient and handle concurrent requests 
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
@@ -34,8 +37,11 @@ namespace API.Controllers
 
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            return await _context.Products.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
             
+            if(product == null) return NotFound();
+
+            return Ok(product);
         }
         
     }
